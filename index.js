@@ -1,1 +1,1 @@
-ва
+import './fourTheme/eightLessonCreatingMurkupJS/index.js';
