@@ -9,6 +9,7 @@ function Render(element){
     this.props = element.props
     this.attrs = element.attrs
     this.children = element.children
+    this.text = element.text
 // Присвоил в локальную переменную метод createElement() создал дом-элемент
     var elem = document.createElement(this.tagName)
 
@@ -35,12 +36,26 @@ function Render(element){
             elem.setAttribute( Object.values(attr)[0], Object.values(attr)[1]  );
         });
     }
+// Пишем текст
+    if ( this.text ){
+        elem.innerText = this.text
+    }
+// Добавляем элементу детей, если они нужны
+    if( this.children ){
+        for( i = 0; i < this.children.length; i++){
+            elem.appendChild(this.children[i]);
+        }
+    }
 
 // Возвращаю готовый элемент
     return elem
 }
 
 // Теперь я могу создавать объект через оператор new, передавая в него данные, а на выходе получать дом елемент, который висит теперь в оперативке и с ним уже можно работать.
+var span = new Render({
+    tagName: 'span',
+    text: 'я спан'
+})
 var p = new Render({
     tagName: 'input',
     attrs: [
@@ -60,8 +75,11 @@ var p = new Render({
             value: true
         }
     ],
-    children: ['span']
+    // в ключ children я передаю переменную с созданным элементом. Таким образом я могу собирать дом-узлы.
+    children: [ span ]
 })
+
+console.log(span)
 // Добавляю созданный элемент в разметку
 document.body.appendChild( p );
 
