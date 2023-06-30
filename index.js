@@ -1,1 +1,1 @@
-import './fourTheme/eightLessonCreatingMurkupJS/index.js';
+import './threeTheme/index.js';

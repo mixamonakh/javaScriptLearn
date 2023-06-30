@@ -9,16 +9,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./fourTheme/eightLessonCreatingMurkupJS/index.js":
-/*!********************************************************!*\
-  !*** ./fourTheme/eightLessonCreatingMurkupJS/index.js ***!
-  \********************************************************/
-/***/ (() => {
-
-eval("// Восьмой урок: Создание разметки HTML при помощи методов JS\r\n\r\n// ДЗ\r\n// Создал функцию конструктор которая принимает объектъ\r\n// element условный атрибут для испольования внутри функции конструктора\r\nfunction Render(element){\r\n    this.tagName = element.tagName\r\n    this.className = element.className\r\n    this.props = element.props\r\n    this.attrs = element.attrs\r\n    this.children = element.children\r\n    this.text = element.text\r\n// Присвоил в локальную переменную метод createElement() создал дом-элемент\r\n    var elem = document.createElement(this.tagName)\r\n\r\n// Делаю проверку if(), что бы скрипт не лег, если какое то поле окажется пустым\r\n    if( this.className ){\r\n// Перебираю массив классов, в каждой итерации добавляю класс к созданному элементу\r\n        for( i = 0; i < this.className.length; i++){\r\n            elem.classList.add(this.className[i]);\r\n        }\r\n    };\r\n\r\n// Перебираю массив свойств с помощью метода forEach\r\n    if( this.props ){\r\n        // В кажой итерации, с помощью метода объекта values() получаю значение ключей и присваиваю новое свойство элементу\r\n        this.props.forEach( prop => {\r\n            elem.setAttribute( Object.values(prop)[0], Object.values(prop)[1]  );\r\n        });\r\n    };\r\n\r\n// Перебираю массив атрибутов с помощью метода forEach\r\n    if( this.attrs ){\r\n        // В кажой итерации, с помощью метода объекта values() получаю значение ключей и присваиваю новый атрибут элементу\r\n        this.attrs.forEach( attr => {\r\n            elem.setAttribute( Object.values(attr)[0], Object.values(attr)[1]  );\r\n        });\r\n    }\r\n// Пишем текст\r\n    if ( this.text ){\r\n        elem.innerText = this.text\r\n    }\r\n// Добавляем элементу детей, если они нужны\r\n    if( this.children ){\r\n        for( i = 0; i < this.children.length; i++){\r\n            elem.appendChild(this.children[i]);\r\n        }\r\n    }\r\n\r\n// Возвращаю готовый элемент\r\n    return elem\r\n}\r\n\r\n// Теперь я могу создавать объект через оператор new, передавая в него данные, а на выходе получать дом елемент, который висит теперь в оперативке и с ним уже можно работать.\r\nvar span = new Render({\r\n    tagName: 'span',\r\n    text: 'я спан'\r\n})\r\nvar p = new Render({\r\n    tagName: 'input',\r\n    attrs: [\r\n        {\r\n            name: 'type',\r\n            value: 'text'\r\n        },\r\n        {\r\n            name: 'placeholder',\r\n            value: 'Name'\r\n        }\r\n    ],\r\n    className: ['div', 'div2'],\r\n    props: [\r\n        {\r\n            name: 'required',\r\n            value: true\r\n        }\r\n    ],\r\n    // в ключ children я передаю переменную с созданным элементом. Таким образом я могу собирать дом-узлы.\r\n    children: [ span ]\r\n})\r\n\r\nconsole.log(span)\r\n// Добавляю созданный элемент в разметку\r\ndocument.body.appendChild( p );\r\n\r\n//Повесить сообщение об отправки на форму\r\n\r\nvar forma = document.querySelector('.form');\r\nvar container = document.querySelector('.container');\r\ncontainer.addEventListener( 'submit', function(e){\r\n    // Отмена стандартного события с помощью превент дефолт\r\n    e.preventDefault()\r\n    alert('Send!!');\r\n});\r\n\r\n// Такое копирование разметки не создает дом узел, а просто дописывает HTML текстом. В итоге мы не можем подписываться на события.\r\nvar outerForm = forma.outerHTML\r\n// container.innerHTML += forma.outerHTML\r\n\r\n// Такой способ имеет место быть если надо поменять текст в кнопке\r\nvar btn = document.querySelector('.btn');\r\ncontainer.addEventListener( 'submit', function(e){\r\n    elem = e.target.querySelector('.btn');\r\n    elem.innerHTML = 'Отправлно!';\r\n    elem.setAttribute('disabled', true)\r\n});\r\n\r\n// Метод для создания DOM узла - createElement()\r\n//Создадим форму\r\nvar newForma = document.createElement('form');\r\nnewForma.setAttribute('action', '#');\r\nnewForma.setAttribute('method', 'get');\r\n\r\n// className перезапишет ключ className\r\nnewForma.className = 'form new-form';\r\n\r\n// задавая классы через setAttribute, перезапишутся классы\r\n// newForma.setAttribute('class', 'get');\r\n// classList.add() добавит класс к уже существующим\r\nnewForma.classList.add('default');\r\nconsole.log({newForma});\r\n\r\n// Создадим инпут\r\nvar newInput = document.createElement('input');\r\nnewInput.setAttribute('type', 'text')\r\nnewInput.setAttribute('placeholder', 'Name');\r\nnewInput.className = 'form__input';\r\nnewInput.required = true;\r\n\r\n// Создадим кнопку\r\nvar newBtn = document.createElement('button');\r\nnewBtn.setAttribute('type', 'submit')\r\nnewBtn.className = 'btn';\r\nnewBtn.innerText = 'Send';\r\n\r\n// метод appendChild() добавит детей в объект ( дом узел )\r\n// добавляем инпут и кноку в форму\r\nnewForma.appendChild( newInput );\r\nnewForma.appendChild( newBtn );\r\n\r\n// добавляем форму в контейнер и выводим в разметку\r\ncontainer.appendChild( newForma );\r\n\r\n// cloneNode() копирует DOM узел, а не текст\r\nvar nodeForm = forma.cloneNode( true );\r\nnodeForm.classList.add('new-form')\r\ncontainer.appendChild( nodeForm );\r\n\r\n// insertBefore() позволяет вставить элемент перед другим элементом в родитле !\r\n// родитель.insertBefore( новыйЭлемент, передКакимЭлементомВставить )\r\ncontainer.insertBefore( nodeForm, newForma );\r\n\r\n// prepend() / append()\r\n// prepend() добавляет в начало списка детей\r\n// append() добавляет в конец списка детей\r\n\r\n//insertAdjacentHRML() вставляет Текст перед/после открывающимся тегом, перед/после закрывающимся тегом\r\nvar heading = document.createElement('h1');\r\nheading.style.color = '#fff';\r\nheading.innerText = 'olala';\r\ncontainer.insertAdjacentHTML( 'beforebegin', heading );\n\n//# sourceURL=webpack://javascriptlearn/./fourTheme/eightLessonCreatingMurkupJS/index.js?");
-
-/***/ }),
-
 /***/ "./index.js":
 /*!******************!*\
   !*** ./index.js ***!
@@ -26,7 +16,7 @@ eval("// Восьмой урок: Создание разметки HTML при 
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _fourTheme_eightLessonCreatingMurkupJS_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./fourTheme/eightLessonCreatingMurkupJS/index.js */ \"./fourTheme/eightLessonCreatingMurkupJS/index.js\");\n/* harmony import */ var _fourTheme_eightLessonCreatingMurkupJS_index_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_fourTheme_eightLessonCreatingMurkupJS_index_js__WEBPACK_IMPORTED_MODULE_0__);\n\n\n//# sourceURL=webpack://javascriptlearn/./index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _threeTheme_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./threeTheme/index.js */ \"./threeTheme/index.js\");\n/* harmony import */ var _threeTheme_index_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_threeTheme_index_js__WEBPACK_IMPORTED_MODULE_0__);\n\n\n//# sourceURL=webpack://javascriptlearn/./index.js?");
 
 /***/ }),
 
@@ -289,6 +279,16 @@ eval("var EventEmitter = __webpack_require__(/*! events */ \"./node_modules/even
 
 eval("var logLevel = \"info\";\n\nfunction dummy() {}\n\nfunction shouldLog(level) {\n\tvar shouldLog =\n\t\t(logLevel === \"info\" && level === \"info\") ||\n\t\t([\"info\", \"warning\"].indexOf(logLevel) >= 0 && level === \"warning\") ||\n\t\t([\"info\", \"warning\", \"error\"].indexOf(logLevel) >= 0 && level === \"error\");\n\treturn shouldLog;\n}\n\nfunction logGroup(logFn) {\n\treturn function (level, msg) {\n\t\tif (shouldLog(level)) {\n\t\t\tlogFn(msg);\n\t\t}\n\t};\n}\n\nmodule.exports = function (level, msg) {\n\tif (shouldLog(level)) {\n\t\tif (level === \"info\") {\n\t\t\tconsole.log(msg);\n\t\t} else if (level === \"warning\") {\n\t\t\tconsole.warn(msg);\n\t\t} else if (level === \"error\") {\n\t\t\tconsole.error(msg);\n\t\t}\n\t}\n};\n\n/* eslint-disable node/no-unsupported-features/node-builtins */\nvar group = console.group || dummy;\nvar groupCollapsed = console.groupCollapsed || dummy;\nvar groupEnd = console.groupEnd || dummy;\n/* eslint-enable node/no-unsupported-features/node-builtins */\n\nmodule.exports.group = logGroup(group);\n\nmodule.exports.groupCollapsed = logGroup(groupCollapsed);\n\nmodule.exports.groupEnd = logGroup(groupEnd);\n\nmodule.exports.setLogLevel = function (level) {\n\tlogLevel = level;\n};\n\nmodule.exports.formatError = function (err) {\n\tvar message = err.message;\n\tvar stack = err.stack;\n\tif (!stack) {\n\t\treturn message;\n\t} else if (stack.indexOf(message) < 0) {\n\t\treturn message + \"\\n\" + stack;\n\t} else {\n\t\treturn stack;\n\t}\n};\n\n\n//# sourceURL=webpack://javascriptlearn/./node_modules/webpack/hot/log.js?");
 
+/***/ }),
+
+/***/ "./threeTheme/index.js":
+/*!*****************************!*\
+  !*** ./threeTheme/index.js ***!
+  \*****************************/
+/***/ (() => {
+
+eval("\n\n//# sourceURL=webpack://javascriptlearn/./threeTheme/index.js?");
+
 /***/ })
 
 /******/ 	});
@@ -344,7 +344,7 @@ eval("var logLevel = \"info\";\n\nfunction dummy() {}\n\nfunction shouldLog(leve
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("2dc352dd73c5959a3c3a")
+/******/ 		__webpack_require__.h = () => ("f15ac7cdf7ada6ab6144")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
